@@ -7,6 +7,11 @@ STATE_GAMEOVER = 1;
 TAG_SCORE  = 1001;
 var g_sharedGameLayer;
 
+var perPt2realPt = function(pt) {
+    var vPt = cc.Director.getInstance().getVisibleOrigin();
+    var vSize = cc.Director.getInstance().getVisibleSize();
+    return cc.PointMake(vPt.x + vSize.width*pt.x,vPt.y + vSize.height*pt.y);
+};
 var GameLayer = cc.Layer.extend({
     _state: null,
     isMouseDown: false,
@@ -35,11 +40,13 @@ var GameLayer = cc.Layer.extend({
         this._texTransparentBatch = cc.SpriteBatchNode.createWithTexture(texTransparent);
         this.addChild(this._texTransparentBatch,1);
         //背景
+
+
+
         var bg = cc.Sprite.createWithSpriteFrameName("bg01.png");
 
         bg.setAnchorPoint(cc.p(0.5, 0.5));
-        bg.setPosition(cc.p(size.width / 2, size.height / 2));
-        bg.setScale(size.height/bg.getContentSize().height);
+        bg.setPosition(perPt2realPt(cc.p(0.5,0.5)));
 
         this._texTransparentBatch.addChild(bg);
 
@@ -137,8 +144,6 @@ var GameLayer = cc.Layer.extend({
 
         this.pauseSchedulerAndActions();
         //cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, new MenuScene()));
-
-
     }
 });
 

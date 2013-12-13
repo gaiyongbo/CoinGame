@@ -53,8 +53,12 @@ var ThingsBase = cc.Sprite.extend({
             {
                 g_sharedGameLayer.gameOver();
             }
-            g_sharedGameLayer._score +=this._info.score;
-            g_sharedGameLayer._scoreLabel.setString("" + g_sharedGameLayer._score);
+            else
+            {
+                g_sharedGameLayer._score +=this._info.score;
+                g_sharedGameLayer._scoreLabel.setString("" + g_sharedGameLayer._score);
+
+            }
 
         }
     },

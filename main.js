@@ -40,33 +40,23 @@ var cocos2dApp = cc.Application.extend({
 
         cc.EGLView.getInstance()._adjustSizeToBrowser();
         var screenSize = cc.EGLView.getInstance().getFrameSize();
-        var resourceSize = cc.size(480, 800);
-        var designSize = cc.size(480, 800);
-
+//        var designSize = cc.size(640, 960);
+        var designSize = cc.size(320, 480);
         var searchPaths = [];
         var resDirOrders = [];
 
-        searchPaths.push("res");
+        searchPaths.push("res/HD");
         cc.FileUtils.getInstance().setSearchPaths(searchPaths);
 
         var platform = cc.Application.getInstance().getTargetPlatform();
-        if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER) {
-            resDirOrders.push("HD");
+        if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER)
+        {
+            cc.EGLView.getInstance().setDesignResolutionSize(designSize.width, designSize.height, cc.RESOLUTION_POLICY.NO_BORDER);
         }
-        else if (platform == cc.TARGET_PLATFORM.PC_BROWSER) {
-            if (screenSize.height >= 800) {
-                resDirOrders.push("HD");
-            }
-            else {
-                resourceSize = cc.size(320, 480);
-                designSize = cc.size(320, 480);
-                resDirOrders.push("Normal");
-            }
+        else if (platform == cc.TARGET_PLATFORM.PC_BROWSER)
+        {
+            cc.EGLView.getInstance().setDesignResolutionSize(designSize.width, designSize.height, cc.RESOLUTION_POLICY.SHOW_ALL);
         }
-
-        cc.FileUtils.getInstance().setSearchResolutionsOrder(resDirOrders);
-        director.setContentScaleFactor(resourceSize.width / designSize.width);
-        cc.EGLView.getInstance().setDesignResolutionSize(designSize.width, designSize.height, cc.RESOLUTION_POLICY.SHOW_ALL);
 
         // turn on display FPS
         director.setDisplayStats(this.config['showFPS']);

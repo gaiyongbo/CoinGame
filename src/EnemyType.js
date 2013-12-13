@@ -3,12 +3,12 @@
  */
 var EnemyType = [
     {
-        fruit:0,
+        coins:0,
         score:5,
         textureName:"E0.png"
     },
     {
-        coins:1,
+        bigerCoins:1,
         score:15,
         textureName:"E1.png"
     },

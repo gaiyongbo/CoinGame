@@ -3,6 +3,7 @@
  */
 var LevelManager = cc.Class.extend({
     _gameLayer:null,
+    _currentTime:0,
     ctor:function (gameLayer) {
         if(!gameLayer){
             throw "gameLayer must be non-nil";
@@ -10,6 +11,11 @@ var LevelManager = cc.Class.extend({
         this._gameLayer = gameLayer;
     },
     loadLevelResource:function(deltaTime){
+
+        this._currentTime += deltaTime;
+
+        //var randNum = cc.rand();
+
         for(var i = 0; i < EnemyType.length; i ++) {
             this.addEnemyToGameLayer(EnemyType[i]);
         }
@@ -24,7 +30,5 @@ var LevelManager = cc.Class.extend({
         var enemypos = cc.p( 80 + (winSize.width - 160) * Math.random(), winSize.height);
         var enemycs =  enemy.getContentSize();
         enemy.setPosition( enemypos );
-
-
     }
 });

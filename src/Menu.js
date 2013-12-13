@@ -21,8 +21,8 @@ var Menu = cc.Layer.extend({
             var bg = cc.Sprite.createWithSpriteFrameName("bg01.png");
 
             bg.setAnchorPoint(cc.p(0.5, 0.5));
-            bg.setPosition(cc.p(size.width / 2, size.height / 2));
-            bg.setScale(size.height/bg.getContentSize().height);
+
+            bg.setPosition(perPt2realPt(cc.p(0.5,0.5)));
 
             this._texTransparentBatch.addChild(bg);
 
