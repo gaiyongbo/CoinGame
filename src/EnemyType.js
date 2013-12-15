@@ -1,25 +1,49 @@
 /**
  * Created by ggv on 13-11-22.
  */
-var EnemyType = [
+var smallCoinsType = [
     {
-        coins:0,
+        type:0,
         score:5,
-        textureName:"E0.png"
+        textureName:"小金币1.png"
     },
     {
-        bigerCoins:1,
+        type:1,
+        score:5,
+        textureName:"小金币2.png"
+    },
+    {
+        type:2,
+        score:5,
+        textureName:"小金币3.png"
+    }
+];
+var biggerCoinType = [
+    {
+        type:3,
         score:15,
-        textureName:"E1.png"
+        textureName:"烈焰.png"
     },
     {
-        knife:2,
-        score:-1,
-        textureName:"E2.png"
+        type:4,
+        score:15,
+        textureName:"尼雅.png"
     },
     {
-        boom:3,
+        type:5,
+        score:15,
+        textureName:"沙地.png"
+    }
+];
+var badThings = [
+    {
+        type:6,
         score:-1,
-        textureName:"E3.png"
+        textureName:"炸弹.png"
+    },
+    {
+        type:7,
+        score:-1,
+        textureName:"刀.png"
     }
 ];

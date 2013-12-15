@@ -7,7 +7,7 @@ var ThingsBase = cc.Sprite.extend({
     _Info:null,
     ctor:function (arg) {
         this._super();
-
+        this.setAnchorPoint(cc.p(0.5,0.5));
         this.scheduleUpdate();
 
     },
@@ -25,7 +25,7 @@ var ThingsBase = cc.Sprite.extend({
         if((y + size.height/2) <=  0) {
             this.removeFromParent(true);
         }
-        else if(this.collide(this,g_sharedGameLayer._theBoy)) {
+        else if(this.collideWithBoy(g_sharedGameLayer._theBoy)) {
 
             if (g_sharedGameLayer._state == STATE_GAMEOVER) {
                 return;
@@ -49,10 +49,23 @@ var ThingsBase = cc.Sprite.extend({
             //加分
 
 
-            if(this._info.score == -1)
+            if(this._info.type == 6)
             {
+                //小孩变黑
+                g_sharedGameLayer.boyBoomed();
+
                 g_sharedGameLayer.gameOver();
+            } else if(this._info.type == 7)
+            {
+                //减血
+                g_sharedGameLayer._theBoy.life +=  this._info.score;
+                g_sharedGameLayer._lifeLabel.setString("" + g_sharedGameLayer._theBoy.life);
+
+                if(g_sharedGameLayer._theBoy.life <= 0) {
+                    g_sharedGameLayer.gameOver();
+                }
             }
+
             else
             {
                 g_sharedGameLayer._score +=this._info.score;
@@ -67,17 +80,17 @@ var ThingsBase = cc.Sprite.extend({
     },
     collideRect:function (p) {
         var a = this.getContentSize();
-        return cc.rect(p.x - a.width / 2, p.y - a.height / 4, a.width, a.height / 2+20);
+        return cc.rect(p.x - a.width / 2 + 30, p.y - a.height / 4, a.width - 30, a.height / 2+20);
     },
 
 
-    collide:function (a, b) {
-        var pos1 = a.getPosition();
+    collideWithBoy:function (b) {
+        var pos1 = this.getPosition();
         var pos2 = b.getPosition();
 
-        var aRect = a.collideRect(pos1);
+        var aRect = this.collideRect(pos1);
         var bRect = b.collideRect(pos2);
         return cc.rectIntersectsRect(aRect, bRect);
-    },
+    }
 
 });

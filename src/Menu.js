@@ -12,43 +12,60 @@ var Menu = cc.Layer.extend({
             var size = cc.Director.getInstance().getWinSize();
             //背景
 
-             cc.SpriteFrameCache.getInstance().addSpriteFrames(s_textureTransparentPack_plist);
+
+             cc.SpriteFrameCache.getInstance().addSpriteFrames(s_gameObjects_plist);
 
              var texTransparent = cc.TextureCache.getInstance().addImage(s_gameObjects);
              this._texTransparentBatch = cc.SpriteBatchNode.createWithTexture(texTransparent);
              this.addChild(this._texTransparentBatch,1);
 
-            var bg = cc.Sprite.createWithSpriteFrameName("bg01.png");
+            var bg = cc.Sprite.create("bg.png");
 
             bg.setAnchorPoint(cc.p(0.5, 0.5));
 
             bg.setPosition(perPt2realPt(cc.p(0.5,0.5)));
 
-            this._texTransparentBatch.addChild(bg);
+            this.addChild(bg);
+
+            //游戏名字
+            var name = cc.Sprite.createWithSpriteFrameName("接金币字_03.png");
+
+            name.setAnchorPoint(cc.p(0.5, 0.5));
+
+            name.setPosition(perPt2realPt(cc.p(0.5,0.7)));
+
+            this._texTransparentBatch.addChild(name);
 
             //add button
 
-            var newGameNormal = cc.Sprite.create(s_menu, cc.rect(0, 0, 126, 33));
-            var newGameSelected = cc.Sprite.create(s_menu, cc.rect(0, 33, 126, 33));
-            var newGameDisabled = cc.Sprite.create(s_menu, cc.rect(0, 33 * 2, 126, 33));
+           // var begin = cc.Sprite.createWithSpriteFrameName('开始按钮.png');
 
-            var gameSettingsNormal = cc.Sprite.create(s_menu, cc.rect(126, 0, 126, 33));
-            var gameSettingsSelected = cc.Sprite.create(s_menu, cc.rect(126, 33, 126, 33));
-            var gameSettingsDisabled = cc.Sprite.create(s_menu, cc.rect(126, 33 * 2, 126, 33));
 
-            var aboutNormal = cc.Sprite.create(s_menu, cc.rect(252, 0, 126, 33));
-            var aboutSelected = cc.Sprite.create(s_menu, cc.rect(252, 33, 126, 33));
-            var aboutDisabled = cc.Sprite.create(s_menu, cc.rect(252, 33 * 2, 126, 33));
 
-            var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, this.onNewGame,this);
+            //var tmp = cc.Sprite.create('开始按钮.png');
+            //var orgSize = tmp.getContentSize();
+           // var fullRect = cc.RectMake(0,0, orgSize.width, orgSize.height);
+            var insetRect = cc.RectMake(1,1,1, 1);
 
-            var gameSettings = cc.MenuItemSprite.create(gameSettingsNormal, gameSettingsSelected, gameSettingsDisabled, this.onSettings, this);
-            var about = cc.MenuItemSprite.create(aboutNormal, aboutSelected, aboutDisabled, this.onAbout, this);
+            var buttonImageNormal = cc.Scale9Sprite.createWithSpriteFrameName('开始按钮.png',insetRect);
+            var imageSize = buttonImageNormal.getContentSize();
 
-            var menu = cc.Menu.create(newGame, gameSettings, about);
-            menu.alignItemsVerticallyWithPadding(10);
-            this.addChild(menu, 1, 2);
-            menu.setPosition(size.width / 2, size.height / 2 - 80);
+            var label = cc.LabelTTF.create('', 'Marker Felt',10);
+
+            var newGameButton = cc.ControlButton.create(label,buttonImageNormal);
+
+            newGameButton.setBackgroundSpriteForState(buttonImageNormal,cc.CONTROL_STATE_NORMAL);
+
+            newGameButton.setPreferredSize(imageSize);
+            newGameButton.setAnchorPoint(cc.p(0.5,0.5));
+            newGameButton.setPosition(cc.p(size.width/2-10, size.height/2 - 50));
+            newGameButton._addTargetWithActionForControlEvent(this, this.onNewGame, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
+
+            this.addChild(newGameButton, 10);
+
+
+
+
         }
     },
     onNewGame:function (pSender) {

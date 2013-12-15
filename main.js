@@ -36,27 +36,40 @@ var cocos2dApp = cc.Application.extend({
     },
     applicationDidFinishLaunching:function () {
         // initialize director
+
+
         var director = cc.Director.getInstance();
 
         cc.EGLView.getInstance()._adjustSizeToBrowser();
         var screenSize = cc.EGLView.getInstance().getFrameSize();
-//        var designSize = cc.size(640, 960);
-        var designSize = cc.size(320, 480);
+        var resourceSize = cc.size(1080, 1920);
+        var designSize = cc.size(1080, 1920);
+
         var searchPaths = [];
         var resDirOrders = [];
 
-        searchPaths.push("res/HD");
+        searchPaths.push("res");
         cc.FileUtils.getInstance().setSearchPaths(searchPaths);
 
         var platform = cc.Application.getInstance().getTargetPlatform();
-        if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER)
-        {
-            cc.EGLView.getInstance().setDesignResolutionSize(designSize.width, designSize.height, cc.RESOLUTION_POLICY.NO_BORDER);
+        if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER) {
+            resDirOrders.push("HD");
         }
-        else if (platform == cc.TARGET_PLATFORM.PC_BROWSER)
-        {
-            cc.EGLView.getInstance().setDesignResolutionSize(designSize.width, designSize.height, cc.RESOLUTION_POLICY.SHOW_ALL);
+        else if (platform == cc.TARGET_PLATFORM.PC_BROWSER) {
+            resDirOrders.push("HD");
+            /*if (screenSize.height >= 960) {
+                resDirOrders.push("HD");
+            }
+            else {
+                resourceSize = cc.size(540, 960);
+                designSize = cc.size(540, 960);
+                resDirOrders.push("Normal");
+            }*/
         }
+
+        cc.FileUtils.getInstance().setSearchResolutionsOrder(resDirOrders);
+        director.setContentScaleFactor(resourceSize.width / designSize.width);
+        cc.EGLView.getInstance().setDesignResolutionSize(designSize.width, designSize.height, cc.RESOLUTION_POLICY.FIXED_WIDTH);
 
         // turn on display FPS
         director.setDisplayStats(this.config['showFPS']);
